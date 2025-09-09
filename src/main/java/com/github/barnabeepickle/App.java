@@ -28,7 +28,7 @@ public class App
         String footer = "Please report issues at https://github.com/barnabeepickle/jfilelist/issues";
 
         // setup the HelpFormmatter
-        HelpFormatter formatter = new HelpFormatter();
+        HelpFormatter formatter = new HelpFormatter(); // this just doesn't work, and the documentation's example is just wrong
         formatter.printHelp("jfilelist", header, options, footer, true);
 
         // create Parser
