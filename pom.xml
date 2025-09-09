@@ -75,6 +75,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-    <finalName>lfj</finalName>
   </build>
 </project>
