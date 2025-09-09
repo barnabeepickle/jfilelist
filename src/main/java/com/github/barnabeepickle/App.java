@@ -9,8 +9,10 @@ import java.nio.file.Paths;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.help.HelpFormatter;
 
 public class App 
 {
@@ -18,8 +20,17 @@ public class App
     {
         // create Options object
         Options options = new Options();
-        options.addOption("path", true, "The file path to list, default = current dir.");
+        options.addOption("path", true, "The file path to list, default = current dir");
+        // do help stuff
+        //options.addOption("h", "help", false, "print this message");
         
+        String header = "List files and folders in a directory";
+        String footer = "Please report issues at https://github.com/barnabeepickle/jfilelist/issues";
+
+        // setup the HelpFormmatter
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("jfilelist", header, options, footer, true);
+
         // create Parser
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
