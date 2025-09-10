@@ -23,7 +23,15 @@
             "name": "Debug (Launch)",
             "request": "launch",
             "mainClass": "",
-            "console": "internalConsole"
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch with Args)",
+            "request": "launch",
+            "mainClass": "",
+            "console": "integratedTerminal",
+            "args": "${command:SpecifyProgramArgs}"
         },
         {
             "type": "java",
