@@ -21,18 +21,25 @@ public class App
         Options options = new Options();
         options.addOption("path", true, "The file path to list, default = current dir");
         // do help stuff
-        //options.addOption("h", "help", false, "print this message");
+        options.addOption("h", "help", false, "print this message");
         
         String header = "List files and folders in a directory";
         String footer = "Please report issues at https://github.com/barnabeepickle/jfilelist/issues";
 
         // setup the HelpFormmatter
         HelpFormatter formatter = new HelpFormatter(); // this just doesn't work, and the documentation's example is just wrong
-        formatter.printHelp("jfilelist", header, options, footer, true);
+        //formatter.printHelp("jfilelist", header, options, footer, true); // we do this later
 
         // create Parser
         CommandLineParser parser = new DefaultParser();
-        CommandLine cmd = parser.parse(options, args);
+        CommandLine cmd = null;
+        try {
+            // parse the command line arguments
+            cmd = parser.parse(options, args);
+        } catch (ParseException exp) {
+            // oops, something went wrong
+            System.err.println("Parsing failed.  Reason: " + exp.getMessage());
+        }
         
         // get the value of the path option
         String fileDirectory = cmd.getOptionValue("path");
@@ -49,12 +56,18 @@ public class App
         // create a Path object for the directory
         Path directory = Paths.get(directoryPath);
 
+        // business stuff 
         // use DirectoryStream to list files in the directory
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
-          
-          // use a for loop to print them on the command line
-            for (Path file : stream) {
-                System.out.println(file.getFileName());
+        if(cmd.hasOption("h")) {
+            // display the help info if argument is present
+            formatter.printHelp("jfilelist", header, options, footer, true);
+        } else {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
+            
+                // use a for loop to print them on the command line
+                for (Path file : stream) {
+                    System.out.println(file.getFileName());
+                }
             }
         }
     }
