@@ -19,16 +19,12 @@ public class App
     {
         // create Options object
         Options options = new Options();
-        options.addOption("path", true, "The file path to list, default = current dir");
-        // do help stuff
+        options.addOption("p", "path", true, "The file path to list, default = current dir");
+        // create the help option
         options.addOption("h", "help", false, "print this message");
-        
+        // set header and footer strings for help
         String header = "List files and folders in a directory";
         String footer = "Please report issues at https://github.com/barnabeepickle/jfilelist/issues";
-
-        // setup the HelpFormmatter
-        HelpFormatter formatter = new HelpFormatter(); // this just doesn't work, and the documentation's example is just wrong
-        //formatter.printHelp("jfilelist", header, options, footer, true); // we do this later
 
         // create Parser
         CommandLineParser parser = new DefaultParser();
@@ -39,6 +35,7 @@ public class App
         } catch (ParseException exp) {
             // oops, something went wrong
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
+            System.exit(127);
         }
         
         // get the value of the path option
@@ -58,8 +55,9 @@ public class App
 
         // business stuff 
         // use DirectoryStream to list files in the directory
-        if(cmd.hasOption("h")) {
-            // display the help info if argument is present
+        if(cmd.hasOption("h")) { // display the help info if argument is present
+            // setup the HelpFormmatter
+            HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("jfilelist", header, options, footer, true);
         } else {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
